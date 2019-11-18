@@ -23,6 +23,29 @@ with requests.session() as s:
       r = s.post(login_url, data=payload,headers=headers)
       print(r)
 
+      #Currently set to 10-12 in room L302
+      #Books 7 days in advance 
+      #Suggestion is running at 1AM every day
+      booking_date = datetime.datetime.now()
+      booking_date += datetime.timedelta(days=7)
+      booking_date = booking_date.replace(hour=22,minute=30,second=00,microsecond=000)
+      end_time = booking_date.replace(year=1900,day=1,month=1,hour=00) 
+      start_time = booking_date.replace(year=1900,day=1,month=1) 
+
+      booking_date = booking_date.isoformat()
+      start_time = start_time.isoformat()
+      end_time = end_time.isoformat()
+      PARAMS = { 
+            'bookingDate':"{}.000Z".format(booking_date),
+            'endTime':"{}.000Z".format(end_time),
+            'resourceId':'9', #Find resouceID for rooms above
+            'startTime':"{}.000Z".format(start_time)
+      }
+      print(PARAMS)
+      r = s.post('https://webapps-5.okanagan.bc.ca/ok/StudentRoomBookings/Booking/Create',params = PARAMS)
+      print(r)
+      
+      
       # How the college deals with time         # Resource ID for each room
 
       # 4pm = 00:00:00                          E204 = 1
@@ -50,25 +73,3 @@ with requests.session() as s:
       # 2pm = 22:00:00
       # 3pm = 23:00:00
 
-
-      #Currently set to 10-12 in room L302
-      #Books 7 days in advance 
-      #Suggestion is running at 1AM every day
-      booking_date = datetime.datetime.now()
-      booking_date += datetime.timedelta(days=7)
-      booking_date = booking_date.replace(hour=22,minute=30,second=00,microsecond=000)
-      end_time = booking_date.replace(year=1900,day=1,month=1,hour=00) 
-      start_time = booking_date.replace(year=1900,day=1,month=1) 
-
-      booking_date = booking_date.isoformat()
-      start_time = start_time.isoformat()
-      end_time = end_time.isoformat()
-      PARAMS = { 
-            'bookingDate':"{}.000Z".format(booking_date),
-            'endTime':"{}.000Z".format(end_time),
-            'resourceId':'9', #Find resouceID for rooms above
-            'startTime':"{}.000Z".format(start_time)
-      }
-      print(PARAMS)
-      r = s.post('https://webapps-5.okanagan.bc.ca/ok/StudentRoomBookings/Booking/Create',params = PARAMS)
-      print(r)

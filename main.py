@@ -23,13 +23,13 @@ with requests.session() as s:
       r = s.post(login_url, data=payload,headers=headers)
       print(r)
 
-      #Currently set to 10-12 in room L302
+      #Currently set to 230-430 in room E409
       #Books 7 days in advance 
-      #Suggestion is running at 1AM every day
+      #Suggestion is running at 12 AM every day
       booking_date = datetime.datetime.now()
       booking_date += datetime.timedelta(days=7)
-      booking_date = booking_date.replace(hour=22,minute=30,second=00,microsecond=000)
-      end_time = booking_date.replace(year=1900,day=1,month=1,hour=00) 
+      booking_date = booking_date.replace(hour=22,minute=30,second=00,microsecond=000)#Replace hour/min with time you want
+      end_time = booking_date.replace(year=1900,day=1,month=1,hour=00) #change to 2 hours past or how ever long you want the room for
       start_time = booking_date.replace(year=1900,day=1,month=1) 
 
       booking_date = booking_date.isoformat()
@@ -38,7 +38,7 @@ with requests.session() as s:
       PARAMS = { 
             'bookingDate':"{}.000Z".format(booking_date),
             'endTime':"{}.000Z".format(end_time),
-            'resourceId':'9', #Find resouceID for rooms above
+            'resourceId':'9', #Find resouceID for rooms below
             'startTime':"{}.000Z".format(start_time)
       }
       print(PARAMS)

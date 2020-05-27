@@ -1,5 +1,4 @@
 # Script for booking a student meeting rooms 7 days in adv 
-# Currently books room E311 from 2-4
 import requests 
 from bs4 import BeautifulSoup
 import datetime

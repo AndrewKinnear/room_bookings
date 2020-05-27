@@ -20,7 +20,6 @@ with requests.session() as s:
 
       login_url = 'https://auth.okanagan.bc.ca/commonauth/'
       r = s.post(login_url, data=payload,headers=headers)
-      print(r)
 
       #Currently set to 230-430 in room E409
       #Books 7 days in advance 
@@ -40,9 +39,9 @@ with requests.session() as s:
             'resourceId':'9', #Find resouceID for rooms below
             'startTime':"{}.000Z".format(start_time)
       }
-      print(PARAMS)
       r = s.post('https://webapps-5.okanagan.bc.ca/ok/StudentRoomBookings/Booking/Create',params = PARAMS)
-      print(r)
+      
+      print("Booked it")
       
       
       # How the college deals with time         # Resource ID for each room
